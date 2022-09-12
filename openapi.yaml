@@ -1,0 +1,72 @@
+---
+openapi: 3.0.2
+info:
+  title: html2pdfrocket
+  version: 1.0.0
+  description: Online HTML to PDF Converter
+paths:
+  /pdf:
+    servers:
+    - url: https://api.html2pdfrocket.com
+      description: ""
+    post:
+      requestBody:
+        description: Api Key and Value are required.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Html2PdfRocketParameters'
+        required: true
+      responses:
+        "200":
+          content:
+            multipart/form-data: {}
+          description: PDF returned from the API.
+components:
+  schemas:
+    Html2PdfRocketParameters:
+      title: Root Type for htmlparams
+      description: ""
+      required:
+      - apiKey
+      - value
+      type: object
+      properties:
+        apiKey:
+          description: A unique api key for the user account.
+          type: string
+          example: d2fd8a2a-bea0-45b6-a2cb-68ae50366baz
+        value:
+          description: A url or html to convert to pdf/image.
+          type: string
+          example: |-
+            https://html2pdfrocket.com
+            OR
+            <html><h1>An <strong>Example</strong> HTML String</h1></html>
+        MarginTop:
+          format: int32
+          description: Value of top margin - default is 0.
+          type: integer
+          example: "5"
+        MarginBottom:
+          format: int32
+          description: Value of bottom margin - default is 0.
+          type: integer
+          example: "20"
+        HeaderUrl:
+          description: A url starting with http containing the html to add a header
+            in the converted pdf/image.
+          type: string
+          example: https://html2pdfrocket.com/examples/BasicHeader.html
+        FooterUrl:
+          description: A url starting with http containing the html to add a footer
+            in the converted pdf/image.
+          type: string
+          example: https://html2pdfrocket.com/examples/footer.htm
+      example:
+        apiKey: "{{apiKey}}"
+        value: https://html2pdfrocket.com
+        MarginTop: 5
+        MarginBottom: 20
+        HeaderUrl: https://html2pdfrocket.com/examples/BasicHeader.html
+        FooterUrl: https://html2pdfrocket.com/examples/footer.htm
